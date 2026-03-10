@@ -13,7 +13,8 @@ public class FunctionalWarmup {
      * Return a Supplier that gives the current month number (1-12).
      */
     public static Supplier<Integer> currentMonthSupplier() {
-        throw new UnsupportedOperationException();
+        Supplier <Integer> currentMonth = () -> LocalDate.now().getMonthValue();
+        return currentMonth;
     }
 
     /**
@@ -22,7 +23,8 @@ public class FunctionalWarmup {
      * has more than 5 characters.
      */
     public static Predicate<String> longerThanFive() {
-        throw new UnsupportedOperationException();
+        Predicate<String> longer = n -> n.length() > 5;
+        return longer;
     }
 
     /**
@@ -34,7 +36,9 @@ public class FunctionalWarmup {
      * Prefer chaining smaller predicates.
      */
     public static Predicate<Integer> positiveAndEven() {
-        throw new UnsupportedOperationException();
+        Predicate<Integer> isPositive = n -> n > 0;
+        Predicate<Integer> isEven = n -> n % 2 == 0;
+        return isPositive.and(isEven);
     }
 
     /**
@@ -48,7 +52,19 @@ public class FunctionalWarmup {
      *
      */
     public static Function<String, Integer> wordCounter() {
-        throw new UnsupportedOperationException();
+        return str -> {
+            if (str == null) return 0;
+            str = str.trim();
+            int count = 0;
+
+            for (int i = 0; i < str.length(); i++) {
+                if (str.contains(" ")) {
+                    count++;
+                }
+            }
+
+            return count + 1;
+        };
     }
 
     /**
@@ -63,6 +79,12 @@ public class FunctionalWarmup {
      * ["  math ", "", " java", "  "] -> ["MATH", "JAVA"]
      */
     public static List<String> cleanLabels(List<String> labels) {
-        throw new UnsupportedOperationException();
+        labels.removeIf(label -> label.contains(" "));
+        labels.removeIf(label -> label.contains(null));
+        for (String label : labels) {
+            label = label.trim();
+            label = label.toUpperCase();
+        }
+        return labels;
     }
 }
